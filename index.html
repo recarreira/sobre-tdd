@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TDD com Python</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css" media="screen">
+      @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+
+      body { 
+        font-family: 'Ubuntu';
+        font-weight: 400;
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin: 5px;
+      }
+      h1 { font-size: 4em; }
+      h2 { font-size: 2.3em; }
+      h3 { font-size: 1.6em; }
+      body { font-size: 1.5em; }
+
+      .slide .content {
+        padding: 10px 90px !important;
+      }
+
+      #slideshow .no-highlight {
+        font-size: 1em !important;
+      }
+
+     /* Two-column layout */
+    .left-column {
+      width: 50%;
+      float: left;
+    }
+    .right-column {
+      width: 50%;
+      float: right;
+    }
+
+    code {
+      -moz-border-radius: 5px;
+      -web-border-radius: 5px;
+      background: #e7e8e2;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+    /* slides */
+
+    .bg-blue {
+      background-color: #326a95;
+    }
+    .bg-dark {
+      color: white;
+      text-shadow: 0 0 20px #333;
+    }
+    .shadow {
+      text-shadow: 0 0 4px white;
+    }
+    .bg-python {
+      background-image:url(images/pythocat_small.png);
+      background-repeat:no-repeat;
+      background-position:bottom;
+      background-attachment:fixed;
+    }
+    .happy {
+      background-image:url(images/happy.jpg);
+      background-repeat:no-repeat;
+      background-position: center;
+      background-size: cover !important;
+    }
+    .sad {
+      background-image:url(images/sad.jpg);
+      background-repeat:no-repeat;
+      background-position: center;
+      background-size: cover !important;
+    }
+    .crazy {
+      background-image:url(images/crazy.jpg);
+      background-repeat:no-repeat;
+      background-position: center;
+      background-size: cover !important;
+    }
+    .crazy2 {
+      background-image:url(images/crazy2.jpg);
+      background-repeat:no-repeat;
+      background-position: center;
+      background-size: cover !important;
+    }
+    .ciclo {
+      background-image:url(images/ciclo.jpg);
+      background-position: center;
+      width: 100%;
+      height: 100%;
+    }
+    .ciclo .red {
+      position:fixed;
+      top:140px;
+      left:180px;
+    }
+    .red {
+      color:#E8220C;
+    }
+    .ciclo .green {
+      position:fixed;
+      top:170px;
+      right:100px;
+    }
+    .green {
+      color: #31BA30;
+    }
+    .ciclo .refactor {
+      position:fixed;
+      left:320px;
+      bottom:20px;
+    }
+    .refactor {
+      color: #575757;
+    }
+    .commit {
+      position:fixed;
+      right:80px;
+      bottom:200px;
+    }
+    .ciclo h1 {
+      font-size: 4em;
+    }
+    .mid {
+      position:absolute;
+      top: 50%;
+    }
+    .pink {
+      font-weight: bold;
+      color: #E8008C;
+    }
+    h6 {
+      -webkit-margin-before: 0 !important;
+      -webkit-margin-after: 0.3em !important;
+      font-size: 0.63em !important;
+    }
+    .small{
+      font-size: 0.45em;
+      font-weight: 400;
+      font-family: 'Ubuntu';
+    }
+    .creditos{
+      position:absolute;
+      font-size: 0.8em;
+      bottom:150px;
+    }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: inverse
+class: center, middle, bg-blue, bg-dark
+layout: true
+---
+# TDD
+## Test-Driven Development
+---
+
+# TDD
+## Desenvolvimento guiado por testes
+---
+class: center, middle, bg-dark, bg-blue, bg-python
+
+# TDD
+## com Python
+---
+class: center, bg-blue, bg-dark
+layout: false
+
+## Legal, do que se trata?
+---
+class: center, bg-blue, bg-dark
+layout: false
+
+## Legal, do que se trata?
+### Utilização de testes automatizados na condução do desenvolvimento
+--
+
+## (what?)
+---
+# Testes
+
+###Por que?
+
+Precisamos:
+
+* Não ter erros chegando até o usuário final
+* Afirmar que o produto funciona
+* **Entregar software com qualidade!**
+---
+class: happy, shadow
+
+# Testes Manuais
+
+* Click, Click
+--
+, click, click
+--
+
+* hmm...
+--
+
+* Click, click
+--
+
+* Tudo ok.
+
+--
+
+Nova funcionalidade!
+
+--
+class: sad
+
+* Repetir
+--
+
+
+Alteração simples!
+
+--
+class: crazy
+
+* Repetir
+---
+class: crazy2, shadow
+
+# Testes Manuais
+
+E se eu te disser que várias pessoas estarão repetindo várias vezes os mesmos testes todos os dias?
+
+
+---
+
+# Testes Manuais
+
+**Servem para**:
+
+* Checar requisitos
+* Testes exploratórios
+* Bons para testes de UI
+--
+
+
+... **e só**.
+--
+
+
+**Problemas**:
+
+* Custo alto
+  * Tempo
+  * Feedback lento
+  * Roteiros
+* Sem reuso
+
+---
+# Testes Automatizados
+
+* Rápidos <!-- executa centenas enquanto faria um manual -->
+--
+
+* Reuso <!-- roda n vezes. o time roda testes de todos -->
+--
+ .pink[<3]
+--
+
+* Acompanhados por toda a equipe <!-- qualquer um pode executar os testes e entender o estado atual do projeto -->
+--
+
+* Encorajam melhorias <!-- menos medo de alterar algo -->
+
+---
+class: center, middle, bg-blue, bg-dark
+
+## Voltando ao TDD
+
+---
+
+layout: false
+
+.ciclo[
+.red[
+# Red
+]
+.green[
+# Green
+]
+.refactor[
+# Refactor
+]
+]
+
+---
+
+.ciclo[
+.red[
+## Teste
+## que falha
+]
+.green[
+# Green
+]
+.refactor[
+# Refactor
+]
+]
+
+---
+
+.ciclo[
+.red[
+## Teste
+## que falha
+]
+.green[
+## Código para o
+## teste passar
+]
+.refactor[
+# Refactor
+]
+]
+
+---
+
+.ciclo[
+.red[
+## Teste
+## que falha
+]
+.green[
+## Código para o
+## teste passar
+]
+.commit[
+### commit!
+]
+.refactor[
+# Refactor
+]
+]
+
+---
+
+.ciclo[
+.red[
+## Teste
+## que falha
+]
+.green[
+## Código para o
+## teste passar
+]
+.commit[
+### commit!
+]
+.refactor[
+## Melhorar o código
+]
+]
+
+---
+
+.red[
+# Red
+]
+
+--
+
+
+* Escrever teste que falhe
+--
+ (ex: testar código não implementado ainda)
+--
+
+* Testar cada parte do código isoladamente.
+--
+
+* Seu teste não pode ser intermitente, portanto não pode depender de fatores externos
+--
+
+  * por exemplo: testar uma função que pega informações de uma API para gerar o retorno.
+--
+.. e a API cai.
+
+---
+
+.green[
+# Green
+]
+
+--
+
+* Keep it simple, stupid(**KISS**): Escrever o mínimo de código possivel para fazer o teste passar
+--
+
+* **Fake It 'Til You Make It**: utilize versões falsas de dependências não implementadas
+--
+ (isso mesmo, hard-coded!)
+
+---
+
+.refactor[
+# Refactor
+]
+--
+
+
+* Don't repeat yourself(DRY): Remover código repetido
+* Remover código não utilizado
+* Melhorar desempenho
+--
+
+* **Melhorar o código!**
+---
+class: center, middle, bg-blue, bg-dark
+
+### Muito bonito e tudo mais...
+
+## mas por que eu deveria praticar isso?
+
+---
+## Vantagens:
+
+* Refatorar com segurança
+--
+
+* Menos código repetido
+--
+
+* Código mais claro
+--
+
+* Menos debug
+--
+ (debug é tempo de desenvolvimento desperdiçado)
+
+--
+* Equipes trabalhando no mesmo código. Típicos problemas:
+  * Duas pessoas implementarem uma mesma funcionalidade.
+  * Seu código quebra uma funcionalidade implementada por outra pessoa.
+  * Merge errado.
+
+---
+## Vantagens:
+
+* Refatorar com segurança
+* Menos código repetido
+* Código mais claro
+* Menos debug (debug é tempo de desenvolvimento desperdiçado)
+* Equipes trabalhando no mesmo código. Típicos problemas:
+  * ~~Duas pessoas implementarem uma mesma funcionalidade.~~
+  * ~~Seu código quebra uma funcionalidade implementada por outra pessoa.~~
+  * ~~Merge errado.~~
+---
+## Importante!
+
+.red[Um código coberto por testes não significa um código infalível.]
+
+--
+
+* Casos não cobertos pelos testes.
+--
+ Ex: exceções ainda não descobertas
+--
+
+* Dependências externas podem ser alteradas.
+--
+
+* Diferenças entre o ambiente de testes e de produção.
+
+---
+class: center, middle, bg-blue, bg-dark
+
+### Ok, ok, me convenceu.
+## Vamos ver como fica o código?
+
+---
+layout: false
+
+## Pytest
+
+* Simples e de fácil entendimento
+``` python
+assert {resultado esperado} == {chamada de código a ser testado}
+```
+* Ferramenta para rodar os testes
+* Funções que auxiliam na implementação dos testes de forma clara
+---
+##O básico
+
+``` python
+def test_division_should_return_2_for_entries_4_and_2():
+    assert 2 == division(4, 2)
+```
+--
+
+###### test_division_should_return_2_for_entries_4_and_2 .red[FAILED]
+---
+##O básico
+
+``` python
+def test_division_should_return_2_for_entries_4_and_2():
+    assert 2 == division(4, 2)
+```
+
+``` python
+def division(a, b):
+    return a/b
+```
+--
+
+###### test_division_should_return_2_for_entries_4_and_2 .green[PASSED]
+
+---
+##Exemplos reais
+
+``` python
+from savingzelda import get_page
+
+def test_get_page_should_return_body_content_for_a_200_status_code_page():
+    pass
+```
+---
+##Exemplos reais
+
+``` python
+from savingzelda import get_page
+
+def test_get_page_should_return_body_content_for_a_200_status_code_page():
+    assert "body content" == get_page("http://github.com/")
+```
+--
+
+* Se o site cair?
+* Se a internet cair?
+* Se o conteúdo da página mudar?
+--
+
+
+Stub!
+
+"Um stub pode **simular o comportamento de um código existente** (como um procedimento em uma máquina remota) ou ser um **substituto temporário** para o código ainda a ser desenvolvido."
+---
+##Exemplos reais
+
+``` python
+from savingzelda import get_page
+import httpretty
+
+@httpretty.activate
+def test_get_page_should_return_body_content_for_a_200_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="mocked body",
+                           status=200)
+    assert "mocked body" == get_page("http://github.com/")
+```
+--
+###### test_get_page_should_return_body_content_for_a_200_status_code_page .red[FAILED]
+
+---
+##Exemplos reais
+
+``` python
+from savingzelda import get_page
+import httpretty
+
+@httpretty.activate
+def test_get_page_should_return_body_content_for_a_200_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="mocked body",
+                           status=200)
+    assert "mocked body" == get_page("http://github.com/")
+```
+```python
+import requests
+
+def get_page(url):
+    page = requests.get(url)
+    return page.text
+```
+--
+###### test_get_page_should_return_body_content_for_a_200_status_code_page .green[PASSED]
+
+---
+```python
+from savingzelda import get_page
+import pytest
+import httpretty
+
+@httpretty.activate
+def test_get_page_should_return_body_content_for_a_200_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="mocked body",
+                           status=200)
+    assert "mocked body" == get_page("http://github.com/")
+
+
+@httpretty.activate
+def test_get_page_should_return_error_message_for_a_404_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="here is the mocked body",
+                           status=404)
+    with pytest.raises(Exception) as context:
+        get_page("http://github.com/")
+
+    assert "Oops! The page returned a status code 404" == context.value.message
+```
+--
+
+```python
+import requests
+
+def get_page(url):
+    page = requests.get(url)
+    return page.text
+```
+###### test_get_page_should_return_body_content_for_a_200_status_code_page .green[PASSED]
+--
+
+###### test_get_page_should_return_error_message_for_a_404_status_code_page .red[FAILED]
+---
+```python
+from savingzelda import get_page
+import pytest
+import httpretty
+
+@httpretty.activate
+def test_get_page_should_return_body_content_for_a_200_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="mocked body",
+                           status=200)
+    assert "mocked body" == get_page("http://github.com/")
+
+
+@httpretty.activate
+def test_get_page_should_return_error_message_for_a_404_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="here is the mocked body",
+                           status=404)
+    with pytest.raises(Exception) as context:
+        get_page("http://github.com/")
+
+    assert "Oops! The page returned a status code 404" == context.value.message
+```
+```python
+import requests
+
+def get_page(url):
+    r = requests.get(url)
+    if r.status_code == 200:
+        return r.text
+    else:
+        message = 'Oops! The page returned a status code 404"
+        raise Exception(message)
+```
+--
+
+###### test_get_page_should_return_body_content_for_a_200_status_code_page .green[PASSED]
+--
+
+###### test_get_page_should_return_error_message_for_a_404_status_code_page .green[PASSED]
+---
+
+```python
+import httpretty
+import pytest
+from savingzelda import get_page
+
+
+@httpretty.activate
+def test_get_page_should_return_proper_html_for_a_200_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="here is the mocked body",
+                           status=200)
+    assert "here is the mocked body" == get_page("http://github.com/")
+
+
+@httpretty.activate
+def test_get_page_should_return_error_message_for_a_404_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="here is the mocked body",
+                           status=404)
+    with pytest.raises(Exception) as context:
+        get_page("http://github.com/")
+
+    assert "Oops! The page returned a status code 404" == context.value.message
+
+@httpretty.activate
+def test_get_page_should_return_error_message_for_a_403_status_code_page():
+    httpretty.register_uri(httpretty.GET, "http://github.com/",
+                           body="here is the mocked body",
+                           status=403)
+    with pytest.raises(Exception) as context:
+        get_page("http://github.com/")
+
+    assert "Oops! The page returned a status code 403" == context.value.message
+```
+---
+
+###### test_get_page_should_return_body_content_for_a_200_status_code_page .green[PASSED]
+--
+
+###### test_get_page_should_return_error_message_for_a_404_status_code_page .green[PASSED]
+--
+
+###### test_get_page_should_return_error_message_for_a_403_status_code_page .red[FAILED]
+---
+
+```python
+import requests
+
+def get_page(url):
+    r = requests.get(url)
+    if r.status_code == 200:
+        return r.text
+    else:
+        message = 'Oops! The page returned a status code 404'
+        raise Exception(message)
+```
+---
+
+```python
+import requests
+
+def get_page(url):
+    r = requests.get(url)
+    if r.status_code == 200:
+        return r.text
+    else:
+        message = 'Oops! The page returned a status code {status}'
+        raise Exception(message.format(status=str(r.status_code)))
+```
+--
+
+###### test_get_page_should_return_body_content_for_a_200_status_code_page .green[PASSED]
+--
+
+###### test_get_page_should_return_error_message_for_a_404_status_code_page .green[PASSED]
+--
+
+###### test_get_page_should_return_error_message_for_a_403_status_code_page .green[PASSED]
+---
+class: center, middle, bg-blue, bg-dark
+
+## ...e por ai vai
+
+---
+class: center, middle, bg-blue, bg-dark
+
+# TDD é uma prática
+### portanto, para aprender, tem que praticar.
+
+---
+
+#E agora?
+
+* ## [Dojo!](http://apoie.org/Dojo.html) .small[praticar, praticar, praticar]
+* [Obey the Testing Goat](http://www.obeythetestinggoat.com/): TDD for the Web, with Python, Selenium, Django, JavaScript and pals...
+* [Pytest](http://pytest.org/latest/) - docs
+* [Coverage](http://nedbatchelder.com/code/coverage/): para medir a cobertura dos testes
+* [pytest-cov](https://pypi.python.org/pypi/pytest-cov): plugin de cobertura para o pytest
+* [Nose](https://nose.readthedocs.org/en/latest/): is nicer testing for python
+
+---
+class: center, middle, bg-blue, bg-dark
+
+# Oops.
+## Quem disse isso mesmo?
+
+---
+##Renata Carreira
+http://renatacarreira.com
+
+Contatos:
+
+* contato@renatacarreira.com
+* rcarreira_estag@horizonte.tv.br
+* Aparecer na minha baia
+* Chamar pelo nome
+* Arremesso de bala juquinha a distância
+* Tiro de nerf na nuca
+* etc
+    </textarea>
+    <script src="remark-0.6.0.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
